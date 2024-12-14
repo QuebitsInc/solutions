@@ -1,21 +1,6 @@
 import React from "react";
 
-const Services = () => {
-  const services = [
-    "Plumbing",
-    "Power Washing",
-    "Door Installation",
-    "Cleaners",
-    "Property Management",
-    "HVAC",
-    "Handyman",
-    "Renovations",
-    "Appliances",
-    "Landscaping",
-    "Window Installation",
-    "ADU Conversions",
-  ];
-
+const Services = ({ items }: any) => {
   return (
     <div className="max-w-6xl mx-auto p-4 w-full py-10 md:py-20">
       <div className="flex flex-col justify-center items-center gap-4">
@@ -27,12 +12,12 @@ for your next project."
           />
         </div>
         <div className="max-w-5xl mx-auto mt-8  grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-          {services.map((item) => (
+          {items.map((item: any) => (
             <div
-              key={item}
+              key={item._id}
               className="bg-background w-full p-4 text-xs rounded-md text-center "
             >
-              {item}
+              {item.title}
             </div>
           ))}
         </div>
