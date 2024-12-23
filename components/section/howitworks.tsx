@@ -3,23 +3,6 @@ import { Title } from "./services";
 import Image from "next/image";
 
 const Howitworks = ({ items }: { items: any }) => {
-  const data = [
-    {
-      name: "Let us know what you need",
-      desc: "From quick fixes to major renovations, we’re here to help with projects big and small",
-      image: "/one.svg",
-    },
-    {
-      name: "Get personalized solutions",
-      desc: "Receive tailored recommendations and book services instantly. Compare quotes to find the perfect match.",
-      image: "/Solution.svg",
-    },
-    {
-      name: "We’re with you every step of the way",
-      desc: "Enjoy expert support and peace of mind knowing your home is in trusted hands.",
-      image: "/Vector.svg",
-    },
-  ];
   return (
     <div className="bg-primary py-10 md:py-20 text-white">
       <div className="max-w-6xl mx-auto w-full p-4 space-y-12 md:space-y-20">

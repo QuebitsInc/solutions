@@ -27,6 +27,7 @@ const Contact = () => {
   });
 
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -83,26 +84,31 @@ const Contact = () => {
       toast.error("Please fix the errors in the form.");
       return;
     }
+
+    setIsLoading(true); // Start loading
+
     const formData = new FormData(e.target);
 
-    const { data, error } = await sendEmail(formData);
-    console.log(error, data);
-    // Simulate backend response
-    if (data?.error) {
-      const errorMessage =
-        "There was a problem sending the email. Please try again!";
-      toast.error(errorMessage);
-      return;
-    } else {
-      toast.success("Message sent successfully");
-      setFormData({
-        email: "",
-        description: "",
-        name: "",
-        phone: "",
-      });
+    try {
+      const { data, error } = await sendEmail(formData);
+      if (data?.error) {
+        toast.error("There was a problem sending the email. Please try again!");
+      } else {
+        toast.success("Message sent successfully");
+        setFormData({
+          email: "",
+          description: "",
+          name: "",
+          phone: "",
+        });
+        window.location.reload();
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again!");
+    } finally {
+      setIsLoading(false); // End loading
+      setCaptchaToken(null); // Reset CAPTCHA
     }
-    setCaptchaToken(null); // Reset CAPTCHA
   };
 
   return (
@@ -189,11 +195,16 @@ const Contact = () => {
 
             <button
               type="submit"
-              className="w-full bg-primary text-white rounded-md"
+              className={`w-full text-white rounded-md ${
+                isLoading ? "bg-gray-400" : "bg-primary"
+              }`}
+              disabled={isLoading}
             >
               <div className="flex p-4 justify-between text-base items-center gap-4 w-full">
-                Get Free Quote
-                <IoArrowForwardCircleOutline className="h-6 w-6" />
+                {isLoading ? "Submitting..." : "Get Free Quote"}
+                {!isLoading && (
+                  <IoArrowForwardCircleOutline className="h-6 w-6" />
+                )}
               </div>
             </button>
           </form>

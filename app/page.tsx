@@ -30,6 +30,13 @@ const offerQuery = groq`
     "image": image.asset->url,
   } 
 `;
+
+const worksQuery = groq`
+  *[_type=="works"] {
+    ...,
+    "image": image.asset->url,
+  } 
+`;
 const fetchReviews = async () => {
   try {
     const posts = await client.fetch(query);
@@ -60,10 +67,21 @@ const fetchOffer = async () => {
   }
 };
 
+const fetchWorks = async () => {
+  try {
+    const posts = await client.fetch(worksQuery);
+    return posts;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return null;
+  }
+};
+
 export default async function Home() {
   const reviews = await fetchReviews();
   const services = await fetchCategories();
   const offers = await fetchOffer();
+  const works = await fetchWorks();
 
   return (
     <>
@@ -77,7 +95,7 @@ export default async function Home() {
         <About />
       </section>
       <Howitworks items={offers} />
-      <Projects />
+      <Projects works={works} />
       <Reviews items={reviews} />
       <section id="contact">
         <Contact />

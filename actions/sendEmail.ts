@@ -5,7 +5,7 @@ import { Resend } from "resend";
 import { validateString, getErrorMessage } from "@/lib/utils";
 import ContactFormEmail from "@/email/contact-form-email";
 
-const resend = new Resend("re_Sezf869C_2A3KdhJhxCsRx6c9UAZi7god");
+const resend = new Resend("re_VjyYgEFy_MnZr2Pvpg9BaLRgSpavVeUpB");
 
 export const sendEmail = async (formData: FormData) => {
   const senderEmail = formData.get("email");
@@ -40,7 +40,7 @@ export const sendEmail = async (formData: FormData) => {
   try {
     data = await resend.emails.send({
       from: "Portfolio Form <onboarding@resend.dev>",
-      to: "admin@solutionsbroker.ca",
+      to: "service@solutionsbroker.ca",
       subject: "Message from contact form",
       replyTo: senderEmail,
       react: React.createElement(ContactFormEmail, {
